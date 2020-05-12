@@ -10,6 +10,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include "lexer.hpp"
 #include "assembler.hpp"
 
 // TODO : worth doing basic token and opcode tests?
