@@ -15,7 +15,7 @@ CXX=g++
 OPT=-O0
 CXXFLAGS=-Wall -g2 -std=c++14 -D_REENTRANT $(OPT)
 TESTFLAGS=
-LDFLAGS=-pthread
+LDFLAGS=
 LIBS = 
 TEST_LIBS=
 
