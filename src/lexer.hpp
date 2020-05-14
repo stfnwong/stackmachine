@@ -13,6 +13,9 @@
 
 #include "source.hpp"
 
+const constexpr int LEXER_TOKEN_BUF_SIZE = 64;
+const constexpr int LEXER_ADDR_INCR = 4;
+
 /*
  *  Lexer 
  */
@@ -27,12 +30,20 @@ private:
     int cur_line;
     int cur_pos;
     char cur_char;
+    int cur_addr;
     char* token_buf;
     int token_buf_size;
 
+    // instruction tables
 private:
-    Token cur_token;
-    // LineInfo?
+    OpcodeTable instr_table;
+    SymbolTable sym_table;
+    void init_instr_table(void);
+
+private:
+    Token    cur_token;
+    LineInfo line_info; // TODO : will there be a data segment for this processor?
+    FileInfo file_info;
 
     // Move thorugh source 
 private:
@@ -67,7 +78,11 @@ public:
     Lexer& operator=(const Lexer& that) = delete;       // don't allow assignment
 
     void lex(void);
+    void init(void);
     int read(const std::string& filename);
+    void setVerbose(void);
+    void clearVerbose(void);
+    bool getVerbose(void) const;
 };
 
 

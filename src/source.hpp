@@ -12,6 +12,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include "opcode.hpp"
 
 /* 
  * Symbol - resolved in a later pass of the Lexer
@@ -26,6 +27,7 @@ public:
     Symbol(const std::string& s, uint32_t a);
     Symbol(const Symbol& that);
 
+    Symbol& operator=(const Symbol& that) = default;
     bool operator==(const Symbol& that) const;
     bool operator!=(const Symbol& that) const;
 
@@ -82,6 +84,50 @@ public:
     //Token& operator=(const Token& that) const = default;
 
     void init(void);
+    std::string toString(void) const;
+};
+
+
+/*
+ * LineInfo
+ * Represents a single line of Stack Machine assembly
+ */
+struct LineInfo
+{
+    int         line_num;
+    uint32_t    addr;
+    Token       token;
+    Opcode      opcode;
+    bool        error;
+    std::string errstr;
+    bool        label;
+    std::string labelstr;
+
+public:
+    LineInfo();
+    LineInfo(const LineInfo& that);
+
+    LineInfo& operator=(const LineInfo& that) = default;
+
+    void init(void);
+    std::string toString(void) const;
+};
+
+
+/*
+ * FileInfo
+ * Represents a file (collection of LineInfos)
+ */
+struct FileInfo
+{
+    std::vector<LineInfo> lines;
+
+public:
+    FileInfo();
+
+    void add(const LineInfo& line);
+    unsigned int size(void) const;
+
     std::string toString(void) const;
 };
 

@@ -15,16 +15,22 @@
 
 
 // ================ LEXER ================ //
-Lexer::Lexer() : verbose(false), cur_line(0), cur_pos(0), cur_char('\0') 
+Lexer::Lexer() : verbose(false), cur_line(0), cur_pos(0), cur_char('\0'), cur_addr(0)
 {
     // init sym table and so on here...
-    this->token_buf_size = 64;
+    this->token_buf_size = LEXER_TOKEN_BUF_SIZE;
     this->token_buf = new char[this->token_buf_size];
 }
 
 Lexer::~Lexer()
 {
     delete[] this->token_buf;
+}
+
+void Lexer::init_instr_table(void)
+{
+    for(const Opcode& code : lex_opcodes)
+        this->instr_table.add(code);
 }
 
 bool Lexer::exhausted(void) const
@@ -169,7 +175,8 @@ void Lexer::nextToken(void)
         out_token = this->extractLiteral(token_str, start_offset, end_offset);
         if(out_token.type == TOK_NONE)
         {
-            // got blank symbol
+            this->line_info.error  = true;
+            this->line_info.errstr = "Got blank symbol " + out_token.toString();
         }
         else
             this->cur_token = out_token;
@@ -182,7 +189,8 @@ void Lexer::nextToken(void)
         out_token = this->extractReg(token_str, start_offset, end_offset);
         if(out_token.type == TOK_NONE)
         {
-            // got blank symbol
+            this->line_info.error  = true;
+            this->line_info.errstr = "Got blank symbol " + out_token.toString();
         }
         else
             this->cur_token = out_token;
@@ -191,7 +199,10 @@ void Lexer::nextToken(void)
     }
 
     // Check if this matches any instructions 
-    //op = this->instr_code_table.get(token_str);       // TODO : need a table for this
+    op = this->instr_table.getName(token_str);       
+
+    // TODO: debug, remove 
+    std::cout << "[" << __func__ << "] got opcode " << op.toString() << std::endl;
           
     // Found an instruction
     if(op.mnemonic != "\0")
@@ -236,23 +247,63 @@ Token Lexer::extractLiteral(const std::string& token, unsigned int start_offset,
 // === lex out tokens ==== //
 void Lexer::parseLine(void)
 {
+    int line_num;
+    Opcode op;
+
+    this->line_info.init();
+    line_num = this->cur_line;
+
     // get the next token
     this->scanToken();
 
-    //if(this->
+    if(this->cur_token.type == TOK_LABEL)
+    {
+
+    }
+
+    // Handle instructions
+    if(this->cur_token.type == TOK_INSTR)
+    {
+        // valid check is already done in scanToken(), so don't need to check here
+        op = this->instr_table.getName(this->cur_token.val);
+
+        switch(op.instr)
+        {
+            case LEX_ADD:
+                break;
+            case LEX_AND:
+                break;
+        }
+
+        goto PARSE_LINE_END;
+    }
+
+PARSE_LINE_END:
+    if(this->verbose)
+        std::cout << "[" << __func__ << "] TODO : print something useful here" << std::endl;
+
+    this->file_info.add(this->line_info);       // TODO : this might not stay here
+    this->cur_addr += LEXER_ADDR_INCR;
 }
 
+/*
+ * Lexer::resolveLabels()
+ */
 void Lexer::resolveLabels(void)
 {
+    if(this->sym_table.size() == 0)
+        return;
 
 }
 
 
+/*
+ * Lexer::lex()
+ */
 void Lexer::lex(void)
 {
     this->cur_line = 1;
     this->cur_pos = 0;
-    //this->text_addr = this->start_addr;     // TODO : proper address init..
 
     while(!this->exhausted())
     {
@@ -276,6 +327,24 @@ void Lexer::lex(void)
     this->resolveLabels();
 }
 
+
+/*
+ * Lexer::init()
+ */
+void Lexer::init(void)
+{
+    this->verbose = false;
+    this->cur_line = 0;
+    this->cur_pos = 0;
+    this->cur_char = '\0';
+    this->cur_addr = 0;
+    this->init_instr_table();
+}
+
+
+/*
+ * Lexer::read()
+ */
 int Lexer::read(const std::string& filename)
 {
     std::ifstream infile(filename);
@@ -302,4 +371,29 @@ int Lexer::read(const std::string& filename)
     this->cur_char = this->source_text[0];
 
     return status;
+}
+
+
+/*
+ * Lexer::setVerbose()
+ */
+void Lexer::setVerbose(void) 
+{
+    this->verbose = true;
+}
+/*
+ *
+ * Lexer::clearVerbose()
+ */
+void Lexer::clearVerbose(void) 
+{
+    this->verbose = false;
+}
+
+/*
+ * Lexer::getVerbose()
+ */
+bool Lexer::getVerbose(void) const
+{
+    return this->verbose;
 }
