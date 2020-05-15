@@ -62,7 +62,7 @@ const Opcode lex_opcodes[] = {
     Opcode(LEX_NULL, ""),
     Opcode(LEX_ADD, "ADD"),
     Opcode(LEX_AND, "AND"),
-    Opcode(LEX_DROP, "DROp"),
+    Opcode(LEX_DROP, "DROP"),
     Opcode(LEX_DUP, "DUP"),
     Opcode(LEX_FETCH, "FETCH"),  // NOTE: Forth uses the symbol '@' for this 
     Opcode(LEX_IF, "IF"),

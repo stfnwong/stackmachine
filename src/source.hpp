@@ -129,6 +129,7 @@ public:
     void add(const LineInfo& line);
     unsigned int size(void) const;
 
+    const LineInfo& get(unsigned int idx) const;
     std::string toString(void) const;
 };
 

@@ -82,6 +82,9 @@ public:
     void setVerbose(void);
     void clearVerbose(void);
     bool getVerbose(void) const;
+
+    // Get the source IR 
+    const FileInfo& getFileInfo(void) const;
 };
 
 

@@ -375,6 +375,8 @@ PARSE_LINE_END:
         //std::cout << "[" << __func__ << "] : " << this->line_info.toString() << std::endl;
     }
 
+    this->line_info.line_num = line_num;
+    this->line_info.addr = this->cur_addr;
     this->file_info.add(this->line_info);       // TODO : this might not stay here
     this->cur_addr += LEXER_ADDR_INCR;
 
@@ -508,4 +510,12 @@ void Lexer::clearVerbose(void)
 bool Lexer::getVerbose(void) const
 {
     return this->verbose;
+}
+
+/*
+ * Lexer::getFileInfo()
+ */
+const FileInfo& Lexer::getFileInfo(void) const
+{
+    return this->file_info;
 }

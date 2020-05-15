@@ -293,6 +293,14 @@ unsigned int FileInfo::size(void) const
 }
 
 /*
+ * FileInfo::get()
+ */
+const LineInfo& FileInfo::get(unsigned int idx) const
+{
+    return this->lines[idx];        // TODO : bounds check
+}
+
+/*
  * FileInfo::toString()
  */
 std::string FileInfo::toString(void) const
