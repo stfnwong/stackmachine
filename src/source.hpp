@@ -20,7 +20,7 @@
 struct Symbol
 {
     std::string sym;
-    uint32_t addr;
+    uint32_t    addr;
 
 public:
     Symbol();
@@ -98,6 +98,7 @@ struct LineInfo
     uint32_t    addr;
     Token       token;
     Opcode      opcode;
+    int         literal;
     bool        error;
     std::string errstr;
     bool        label;

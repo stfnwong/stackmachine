@@ -24,8 +24,11 @@ typedef enum
     LEX_DUP,
     LEX_FETCH,
     LEX_IF,
+    LEX_LIT,
     LEX_OR,
     LEX_OVER,
+    LEX_RPUSH,
+    LEX_RPOP,
     LEX_STORE,
     LEX_SWAP,
     LEX_XOR,
@@ -57,17 +60,20 @@ public:
 // List of opcodes accepted by assembler 
 const Opcode lex_opcodes[] = {
     Opcode(LEX_NULL, ""),
-    Opcode(LEX_ADD, "add"),
-    Opcode(LEX_AND, "and"),
-    Opcode(LEX_DROP, "drop"),
-    Opcode(LEX_DUP, "dup"),
-    Opcode(LEX_FETCH, "fetch"),  // NOTE: Forth uses the symbol '@' for this 
-    Opcode(LEX_IF, "if"),
-    Opcode(LEX_OR, "or"),
-    Opcode(LEX_OVER, "over"),
-    Opcode(LEX_STORE, "store"),  // NOTE: Forth uses the symbol '!' for this 
-    Opcode(LEX_SWAP, "swap"),
-    Opcode(LEX_XOR, "xor"),
+    Opcode(LEX_ADD, "ADD"),
+    Opcode(LEX_AND, "AND"),
+    Opcode(LEX_DROP, "DROp"),
+    Opcode(LEX_DUP, "DUP"),
+    Opcode(LEX_FETCH, "FETCH"),  // NOTE: Forth uses the symbol '@' for this 
+    Opcode(LEX_IF, "IF"),
+    Opcode(LEX_LIT, "LIT"),
+    Opcode(LEX_OR, "OR"),
+    Opcode(LEX_OVER, "OVER"),
+    Opcode(LEX_RPUSH, "RPUSH"),
+    Opcode(LEX_RPOP, "RPOP"),
+    Opcode(LEX_STORE, "STORE"),  // NOTE: Forth uses the symbol '!' for this 
+    Opcode(LEX_SWAP, "SWAP"),
+    Opcode(LEX_XOR, "XOR"),
 };
 
 

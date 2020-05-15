@@ -174,16 +174,22 @@ std::string Token::toString(void) const
     {
         case TOK_NONE:
             oss << "[NULL]";
+            break;
         case TOK_REG:
             oss << "[REG]";
+            break;
         case TOK_SYM:
             oss << "[SYM]";
+            break;
         case TOK_INSTR:
             oss << "[INSTR]";
+            break;
         case TOK_LITERAL:
             oss << "[LITERAL]";
+            break;
         case TOK_LABEL:
             oss << "[LABEL]";
+            break;
     }
     oss << " " << this->val;
 
@@ -199,6 +205,7 @@ LineInfo::LineInfo() :
     addr(0),
     token(Token()),
     opcode(Opcode()),
+    literal(0),
     error(false),
     errstr(""),
     label(false),
@@ -208,34 +215,36 @@ LineInfo::LineInfo() :
 
 LineInfo::LineInfo(const LineInfo& that)
 {
-    this->line_num   = that.line_num;
-    this->addr   = that.addr;
-    this->token  = that.token;
-    this->opcode = that.opcode;
-    this->error  = that.error;
-    this->errstr = that.errstr;
-    this->label  = that.label;
+    this->line_num = that.line_num;
+    this->addr     = that.addr;
+    this->token    = that.token;
+    this->opcode   = that.opcode;
+    this->literal  = that.literal;
+    this->error    = that.error;
+    this->errstr   = that.errstr;
+    this->label    = that.label;
     this->labelstr = that.labelstr;
 }
 
 
 /*
- * init()
+ * LineInfo::init()
  */
 void LineInfo::init(void)
 {
-    this->line_num   = 0;
-    this->addr   = 0;
-    this->error  = false;
-    this->errstr = "";
-    this->label  = false;
-    this->labelstr = "";
+    this->line_num  = 0;
+    this->addr      = 0;
+    this->literal   = 0;
+    this->error     = false;
+    this->errstr    = "";
+    this->label     = false;
+    this->labelstr  = "";
     this->token.init();
     this->opcode.init();
 }
 
 /*
- * toString()
+ * LineInfo::toString()
  */
 std::string LineInfo::toString(void) const
 {

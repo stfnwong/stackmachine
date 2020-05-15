@@ -61,12 +61,11 @@ private:
 
     // extract tokens
 private:
-    Token extractReg(const std::string& token, unsigned int start_offset, unsigned int end_offset);
-    Token extractLiteral(const std::string& token, unsigned int start_offset, unsigned int end_offset);
-    //void extractInstr(void):
+    Token extractLiteral(const std::string& token, unsigned int start_offset, unsigned int& end_offset);
+    int convertLiteral(const std::string& literal);
 
 private:
-    void parseLine(void);
+    int parseLine(void);
     void resolveLabels(void);
 
 public:
@@ -77,7 +76,7 @@ public:
 
     Lexer& operator=(const Lexer& that) = delete;       // don't allow assignment
 
-    void lex(void);
+    int lex(void);
     void init(void);
     int read(const std::string& filename);
     void setVerbose(void);
