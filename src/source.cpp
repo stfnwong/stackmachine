@@ -13,7 +13,7 @@
 // ================ SYMBOL ================ //
 Symbol::Symbol() : sym(""), addr(0) {} 
 
-Symbol::Symbol(const std::string& s, uint32_t a) : sym(s), addr(a) {} 
+Symbol::Symbol(const std::string& s, uint16_t a) : sym(s), addr(a) {} 
 
 Symbol::Symbol(const Symbol& that)
 {
@@ -103,7 +103,7 @@ Symbol SymbolTable::search(const std::string& sym) const
 /*
  * Symbol::searchAddr()
  */
-Symbol SymbolTable::searchAddr(uint32_t addr) const
+Symbol SymbolTable::searchAddr(uint16_t addr) const
 {
     for(unsigned int s = 0; s < this->syms.size(); ++s)
     {

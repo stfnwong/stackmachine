@@ -21,8 +21,8 @@ const constexpr int SM_STACK_SIZE = 0x20;
 
 struct State
 {
-    uint32_t pc;
-    uint32_t mar;
+    uint16_t pc;
+    uint16_t mar;
     uint8_t  reg[SM_NUM_REG];
     Stack<uint8_t> data_stack;
     Stack<uint8_t> return_stack;
@@ -36,8 +36,8 @@ public:
     State(const State& that);
 
     void next(void);
-    void store(uint32_t addr, uint8_t data);
-    uint8_t load(uint32_t addr) const;
+    void store(uint16_t addr, uint8_t data);
+    uint8_t load(uint16_t addr) const;
 
 
     void init_mem(void);

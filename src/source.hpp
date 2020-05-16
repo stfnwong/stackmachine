@@ -20,11 +20,11 @@
 struct Symbol
 {
     std::string sym;
-    uint32_t    addr;
+    uint16_t    addr;
 
 public:
     Symbol();
-    Symbol(const std::string& s, uint32_t a);
+    Symbol(const std::string& s, uint16_t a);
     Symbol(const Symbol& that);
 
     Symbol& operator=(const Symbol& that) = default;
@@ -49,7 +49,7 @@ public:
     void init(void);
     void add(const Symbol& s);
     Symbol search(const std::string& sym) const;
-    Symbol searchAddr(uint32_t addr) const;
+    Symbol searchAddr(uint16_t addr) const;
     unsigned int size(void) const;
 };
 
@@ -95,7 +95,7 @@ public:
 struct LineInfo
 {
     int         line_num;
-    uint32_t    addr;
+    uint16_t    addr;
     Opcode      opcode;
     int         literal;
     bool        error;

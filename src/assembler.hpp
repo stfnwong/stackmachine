@@ -12,8 +12,27 @@
 #include <string>
 #include <vector>
 
+#include "source.hpp"
+
+/*
+ * Assembler.
+ * Accept a FileInfo structure and produce a binary
+ */
+class Assembler
+{
+private:
+    bool verbose;
+
+private:
 
 
+public:
+    Assembler();
+
+    int assem(const FileInfo& file_info);
+    void setVerbose(void);
+    void clearVerbose(void);
+};
 
 
 

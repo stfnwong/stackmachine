@@ -36,7 +36,7 @@ State::State(const State& that)
 /*
  * State::store()
  */
-void State::store(uint32_t addr, uint8_t data)
+void State::store(uint16_t addr, uint8_t data)
 {
     if(addr < SM_MEM_SIZE)
         this->mem[addr] = data;
@@ -45,7 +45,7 @@ void State::store(uint32_t addr, uint8_t data)
 /*
  * State::load()
  */
-uint8_t State::load(uint32_t addr) const
+uint8_t State::load(uint16_t addr) const
 {
     if(addr < SM_MEM_SIZE)
         return this->mem[addr];

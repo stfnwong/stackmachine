@@ -41,7 +41,7 @@ FileInfo get_all_instr_file_fileinfo(void)
     // STORE $60
     line.init();
     line.opcode = Opcode(LEX_STORE, "STORE");
-    line.addr   = 0x4;          
+    line.addr   = 0x2;          
     line.line_num = 10;
     line.literal = 0x60;
     info.add(line);
@@ -49,21 +49,21 @@ FileInfo get_all_instr_file_fileinfo(void)
     // SUB
     line.init();
     line.opcode = Opcode(LEX_SUB, "SUB");
-    line.addr   = 0x8;          
+    line.addr   = 0x4;          
     line.line_num = 11;
     info.add(line);
 
     // RPUSH
     line.init();
     line.opcode = Opcode(LEX_RPUSH, "RPUSH");
-    line.addr   = 0xC;          
+    line.addr   = 0x6;          
     line.line_num = 12;
     info.add(line);
 
     // FETCH $500
     line.init();
     line.opcode = Opcode(LEX_FETCH, "FETCH");
-    line.addr   = 0x10;          
+    line.addr   = 0x8;          
     line.line_num = 13;
     line.literal = 0x500;
     info.add(line);
@@ -71,84 +71,84 @@ FileInfo get_all_instr_file_fileinfo(void)
     // AND
     line.init();
     line.opcode = Opcode(LEX_AND, "AND");
-    line.addr   = 0x14;          
+    line.addr   = 0xA;          
     line.line_num = 14;
     info.add(line);
 
     // DROP
     line.init();
     line.opcode = Opcode(LEX_DROP, "DROP");
-    line.addr   = 0x18;          
+    line.addr   = 0xC;          
     line.line_num = 15;
     info.add(line);
 
     // DUP
     line.init();
     line.opcode = Opcode(LEX_DUP, "DUP");
-    line.addr   = 0x1C;          
+    line.addr   = 0xE;          
     line.line_num = 16;
     info.add(line);
 
     // OR
     line.init();
     line.opcode = Opcode(LEX_OR, "OR");
-    line.addr   = 0x20;          
+    line.addr   = 0x10;          
     line.line_num = 17;
     info.add(line);
 
     // OVER
     line.init();
     line.opcode = Opcode(LEX_OVER, "OVER");
-    line.addr   = 0x24;          
+    line.addr   = 0x12;          
     line.line_num = 18;
     info.add(line);
 
     // RPOP
     line.init();
     line.opcode = Opcode(LEX_RPOP, "RPOP");
-    line.addr   = 0x28;          
+    line.addr   = 0x14;          
     line.line_num = 19;
     info.add(line);
 
     // SWAP
     line.init();
     line.opcode = Opcode(LEX_SWAP, "SWAP");
-    line.addr   = 0x2C;          
+    line.addr   = 0x16;          
     line.line_num = 20;
     info.add(line);
 
     // XOR
     line.init();
     line.opcode = Opcode(LEX_XOR, "XOR");
-    line.addr   = 0x30;          
+    line.addr   = 0x18;          
     line.line_num = 21;
     info.add(line);
 
     // IF
     line.init();
     line.opcode = Opcode(LEX_IF, "IF");
-    line.addr   = 0x34;          
+    line.addr   = 0x1A;          
     line.line_num = 22;
     info.add(line);
 
     // CALL
     line.init();
     line.opcode = Opcode(LEX_CALL, "CALL");
-    line.addr   = 0x38;          
+    line.addr   = 0x1C;          
     line.line_num = 23;
     info.add(line);
 
     // EXIT
     line.init();
     line.opcode = Opcode(LEX_EXIT, "EXIT");
-    line.addr   = 0x3C;          
+    line.addr   = 0x1E;          
     line.line_num = 24;
     info.add(line);
 
     // LIT
     line.init();
     line.opcode = Opcode(LEX_LIT, "LIT");
-    line.addr   = 0x40;          
+    line.addr   = 0x20;          
     line.line_num = 25;
     info.add(line);
 
