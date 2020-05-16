@@ -280,7 +280,7 @@ std::string LineInfo::toString(void) const
 
     // TODO: most of these aren't used yet...
     oss << "---------------------------------------------------------------------" << std::endl;
-    oss << "Line  Type   Addr  Mnemonic   Opcode   Literal   error" << std::endl;
+    oss << "Line  Type   Addr   Mnemonic    Opcode   Literal   error" << std::endl;
 
     oss << std::left << std::setw(6) << std::setfill(' ') << this->line_num;
     oss << "[";
@@ -290,15 +290,42 @@ std::string LineInfo::toString(void) const
         oss << ".";
     oss << "]   ";
     // Address
-    oss << std::right << "0x" << std::hex << std::setw(4) << std::setfill('0') << this->addr << " ";
+    oss << std::right << "0x" << std::hex << std::setw(4) << std::setfill('0') << this->addr << "  ";
     // Mnemonic
     oss << std::left << std::setw(12) << std::setfill(' ') << this->opcode.mnemonic;
     // Instruction
-    oss << "0x" << std::right << std::hex << std::setw(4) << std::setfill('0') << this->opcode.instr << "  ";
+    oss << "0x" << std::right << std::hex << std::setw(4) << std::setfill('0') << this->opcode.instr << "   ";
     // Literal
     oss << "0x" << std::right << std::hex << std::setw(4) << std::setfill('0') << this->literal << "  ";
 
     oss << std::endl;
+
+    return oss.str();
+}
+
+/*
+ * LineInfo::diffStr()
+ */
+std::string LineInfo::diffString(const LineInfo& that) const
+{
+    std::ostringstream oss;
+
+    if(this->line_num != that.line_num)
+        oss << "line_num (" << this->line_num << ") != (" << that.line_num << ")" << std::endl;
+    if(this->addr != that.addr)
+        oss << "addr (" << this->addr << ") != (" << that.addr << ")" << std::endl;
+    if(this->opcode != that.opcode)
+        oss << "opcode (" << this->opcode.toString() << ") != (" << that.opcode.toString() << ")" << std::endl;
+    if(this->literal != that.literal)
+        oss << "literal (" << this->literal << ") != (" << that.literal << ")" << std::endl;
+    if(this->error != that.error)
+        oss << "error (" << this->error << ") != (" << that.error << ")" << std::endl;
+    if(this->errstr != that.errstr)
+        oss << "errstr (" << this->errstr << ") != (" << that.errstr << ")" << std::endl;
+    if(this->label != that.label)
+        oss << "label (" << this->label << ") != (" << that.label << ")" << std::endl;
+    if(this->labelstr != that.labelstr)
+        oss << "labelstr (" << this->labelstr << ") != (" << that.labelstr << ")" << std::endl;
 
     return oss.str();
 }

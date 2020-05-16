@@ -86,70 +86,70 @@ FileInfo get_all_instr_file_fileinfo(void)
     line.init();
     line.opcode = Opcode(LEX_DUP, "DUP");
     line.addr   = 0x1C;          
-    line.line_num = 15;
+    line.line_num = 16;
     info.add(line);
 
     // OR
     line.init();
     line.opcode = Opcode(LEX_OR, "OR");
     line.addr   = 0x20;          
-    line.line_num = 15;
+    line.line_num = 17;
     info.add(line);
 
     // OVER
     line.init();
     line.opcode = Opcode(LEX_OVER, "OVER");
     line.addr   = 0x24;          
-    line.line_num = 16;
+    line.line_num = 18;
     info.add(line);
 
     // RPOP
     line.init();
     line.opcode = Opcode(LEX_RPOP, "RPOP");
     line.addr   = 0x28;          
-    line.line_num = 17;
+    line.line_num = 19;
     info.add(line);
 
     // SWAP
     line.init();
     line.opcode = Opcode(LEX_SWAP, "SWAP");
     line.addr   = 0x2C;          
-    line.line_num = 18;
+    line.line_num = 20;
     info.add(line);
 
     // XOR
     line.init();
     line.opcode = Opcode(LEX_XOR, "XOR");
     line.addr   = 0x30;          
-    line.line_num = 19;
+    line.line_num = 21;
     info.add(line);
 
     // IF
     line.init();
     line.opcode = Opcode(LEX_IF, "IF");
     line.addr   = 0x34;          
-    line.line_num = 20;
+    line.line_num = 22;
     info.add(line);
 
     // CALL
     line.init();
     line.opcode = Opcode(LEX_CALL, "CALL");
     line.addr   = 0x38;          
-    line.line_num = 21;
+    line.line_num = 23;
     info.add(line);
 
     // EXIT
     line.init();
     line.opcode = Opcode(LEX_EXIT, "EXIT");
     line.addr   = 0x3C;          
-    line.line_num = 22;
+    line.line_num = 24;
     info.add(line);
 
     // LIT
     line.init();
     line.opcode = Opcode(LEX_LIT, "LIT");
     line.addr   = 0x40;          
-    line.line_num = 23;
+    line.line_num = 25;
     info.add(line);
 
     return info;
@@ -172,15 +172,6 @@ TEST_CASE("lex all instructions", "[classic]")
 
     FileInfo out_fileinfo = test_lexer.getFileInfo();
 
-    // TODO : eventually get rid of this...
-    for(unsigned int l = 0; l < out_fileinfo.size(); ++l)
-    {
-        LineInfo cur_line = out_fileinfo.get(l);
-        std::cout << std::dec << std::setw(4) << "[" 
-            << l << "]" << std::endl;
-        std::cout << cur_line.toString() << std::endl;
-    }
-
     std::cout << "Found " << out_fileinfo.size() << " instructions in source file " 
         << all_instr_file << std::endl;
 
@@ -197,8 +188,9 @@ TEST_CASE("lex all instructions", "[classic]")
         if(exp_line != out_line)
         {
             std::cout << "ERROR in line " << std::dec << l << std::endl;
-            std::cout << "Expecting : " << std::endl << exp_line.toString() << std::endl;
-            std::cout << "Got       : " << std::endl << out_line.toString() << std::endl;
+            std::cout << "Expecting  " << std::endl << exp_line.toString() << std::endl;
+            std::cout << "Got        " << std::endl << out_line.toString() << std::endl;
+            std::cout << "Diff       " << std::endl << out_line.diffString(exp_line) << std::endl;
         }
         REQUIRE(exp_line == out_line);
     }

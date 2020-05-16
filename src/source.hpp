@@ -113,6 +113,7 @@ public:
 
     void init(void);
     std::string toString(void) const;
+    std::string diffString(const LineInfo& that) const;
 };
 
 

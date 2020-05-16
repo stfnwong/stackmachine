@@ -189,10 +189,9 @@ void Lexer::nextToken(void)
     std::transform(token_str.begin(), token_str.end(), token_str.begin(),
             [](unsigned char c){ return std::toupper(c); });
 
-    // Check digits, which may be either literals or register offsets 
-    if(std::isdigit(token_str[0]))
+    if(token_str[0] == '$')
     {
-        out_token = this->extractLiteral(token_str, 0);
+        out_token = this->extractLiteral(token_str, 1);
         if(out_token.type == TOK_NONE)
         {
             this->line_info.error  = true;
@@ -339,6 +338,7 @@ int Lexer::parseLine(void)
             case LEX_STORE:
             case LEX_FETCH:
                 this->nextToken();
+                std::cout << "[" << __func__ << "] this->cur_token : " << this->cur_token.toString() << std::endl;
                 if(this->cur_token.type != TOK_LITERAL)
                 {
                     this->line_info.error = true;
@@ -353,6 +353,7 @@ int Lexer::parseLine(void)
             case LEX_DUP:
             case LEX_DROP:
             case LEX_OR:
+            case LEX_OVER:
             case LEX_RPUSH:
             case LEX_RPOP:
             case LEX_SUB:
@@ -409,14 +410,6 @@ int Lexer::lex(void)
     int status = 0;
     this->cur_line = 1;
     this->cur_pos = 0;
-
-    // TODO : debug print instrs before lexing
-    std::cout << "[" << __func__ << "] " << this->instr_table.size() << " current instructions : " << std::endl;
-    for(unsigned int i = 0; i < this->instr_table.size(); ++i)
-    {
-        Opcode op = this->instr_table.getIdx(i);
-        std::cout << "[" << std::setw(2) << std::dec << i << "] " << op.toString() << std::endl;
-    }
 
     while(!this->exhausted())
     {
