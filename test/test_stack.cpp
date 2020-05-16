@@ -15,7 +15,7 @@
 
 TEST_CASE("test stack init", "[classic]")
 {
-    Stack<uint32_t> test_stack;
+    Stack<uint16_t> test_stack;
 
     REQUIRE(test_stack.empty() == true);
     REQUIRE(test_stack.full() == false);
@@ -25,14 +25,14 @@ TEST_CASE("test stack init", "[classic]")
 
 TEST_CASE("test stack fill", "[classic]")
 {
-    Stack<uint32_t> test_stack;
+    Stack<uint16_t> test_stack;
 
     REQUIRE(test_stack.empty() == true);
     REQUIRE(test_stack.full() == false);
     REQUIRE(test_stack.size() == 0);
 
     // start putting things into the stack
-    for(uint32_t i = 0; i < test_stack.capacity(); ++i)
+    for(uint16_t i = 0; i < test_stack.capacity(); ++i)
     {
         test_stack.push(2 * i);
         REQUIRE(test_stack.size() == i+1);
@@ -59,7 +59,7 @@ TEST_CASE("test stack fill", "[classic]")
 
 TEST_CASE("test stack fill then empty", "[classic]")
 {
-    Stack<uint32_t> test_stack;
+    Stack<uint16_t> test_stack;
 
     REQUIRE(test_stack.empty() == true);
     REQUIRE(test_stack.full() == false);
