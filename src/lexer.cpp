@@ -5,7 +5,7 @@
  * Stefan Wong 2020
  */
 
-
+#include <algorithm>
 #include <iomanip>
 #include <iostream>
 #include <fstream>
@@ -15,7 +15,13 @@
 
 
 // ================ LEXER ================ //
-Lexer::Lexer() : verbose(false), cur_line(0), cur_pos(0), cur_char('\0'), cur_addr(0)
+Lexer::Lexer() : 
+    verbose(false), 
+    cur_line(0), 
+    cur_col(0), 
+    cur_pos(0), 
+    cur_char('\0'), 
+    cur_addr(0)
 {
     // init sym table and so on here...
     this->token_buf_size = LEXER_TOKEN_BUF_SIZE;
@@ -58,8 +64,12 @@ void Lexer::advance(void)
     else
         this->cur_char = this->source_text[this->cur_pos];
 
+    this->cur_col++;
     if(this->cur_char == '\n')
+    {
         this->cur_line = this->cur_line + 1;
+        this->cur_col = 0;
+    }
 }
 
 
@@ -199,6 +209,7 @@ void Lexer::nextToken(void)
     // For now literals always start with '$' and are in hexadecimal
     if(token_str[0] == '$')
     {
+        // TODO : do I really need end_offset here?
         out_token = this->extractLiteral(token_str, 0, end_offset);
         if(out_token.type == TOK_NONE)
         {
@@ -328,6 +339,7 @@ int Lexer::parseLine(void)
         // valid check is already done in scanToken(), so don't need to check here
         std::cout << "[" << __func__ << "] this->cur_token : " << this->cur_token.toString() << std::endl;
         op = this->instr_table.getName(this->cur_token.val);
+        this->line_info.opcode = op;
 
         // TODO : debug, remove 
         std::cout << "[" << __func__ << "] got opcode : " << op.toString() << std::endl;
@@ -348,12 +360,19 @@ int Lexer::parseLine(void)
                 break;
 
             case LEX_ADD:
-                break;
             case LEX_AND:
-                break;
             case LEX_DUP:
-                break;
+            case LEX_DROP:
             case LEX_OR:
+            case LEX_RPUSH:
+            case LEX_RPOP:
+            case LEX_SUB:
+            case LEX_XOR:
+            case LEX_IF:
+            case LEX_CALL:
+            case LEX_EXIT:
+            case LEX_SWAP:
+            case LEX_LIT:
                 break;
 
             default:
@@ -423,10 +442,14 @@ int Lexer::lex(void)
         // eat comments 
         if(this->isComment())
         {
-            std::cout << "[" << __func__ << "] skipping comment on line " << this->cur_line << std::endl;
+            std::cout << "[" << __func__ << "] found comment on line " 
+                << this->cur_line << " at column (skipping to end of line)" << this->cur_col << std::endl;
             this->skipComment();
             continue;
         }
+        // TODO : remove 
+        std::cout << "[" << __func__ << "] parsing line " << this->cur_line 
+            << " starting at column " << this->cur_col << std::endl;
         status = this->parseLine();
 
         if(status < 0)
@@ -450,6 +473,7 @@ void Lexer::init(void)
 {
     this->verbose = false;
     this->cur_line = 0;
+    this->cur_col = 0;
     this->cur_pos = 0;
     this->cur_char = '\0';
     this->cur_addr = 0;

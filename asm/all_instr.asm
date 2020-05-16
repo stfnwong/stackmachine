@@ -7,7 +7,7 @@
 ; Also in this version, I will use long words for mnemonics (eg: STORE rather than !)
 
 ADD             ; Add N1 and N2. Not sure that the register names should start with N right now...
-STORE N1 $60    ; Store top of stack at address 0x60
+STORE $60       ; Store top of stack at address 0x60
 SUB             ; Subtract N2 from N1, push result to N3
 RPUSH           ; Push N1 onto top of return stack
 FETCH $500      ; Fetch the value at memory address 0x500

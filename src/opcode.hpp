@@ -20,8 +20,10 @@ typedef enum
     LEX_NULL,
     LEX_ADD,
     LEX_AND,
+    LEX_CALL,
     LEX_DROP,
     LEX_DUP,
+    LEX_EXIT,
     LEX_FETCH,
     LEX_IF,
     LEX_LIT,
@@ -31,6 +33,7 @@ typedef enum
     LEX_RPOP,
     LEX_STORE,
     LEX_SWAP,
+    LEX_SUB,
     LEX_XOR,
 } LEX_INSTR_CODES;
 
@@ -62,8 +65,10 @@ const Opcode lex_opcodes[] = {
     Opcode(LEX_NULL, ""),
     Opcode(LEX_ADD, "ADD"),
     Opcode(LEX_AND, "AND"),
+    Opcode(LEX_CALL, "CALL"),
     Opcode(LEX_DROP, "DROP"),
     Opcode(LEX_DUP, "DUP"),
+    Opcode(LEX_EXIT, "EXIT"),
     Opcode(LEX_FETCH, "FETCH"),  // NOTE: Forth uses the symbol '@' for this 
     Opcode(LEX_IF, "IF"),
     Opcode(LEX_LIT, "LIT"),
@@ -73,6 +78,7 @@ const Opcode lex_opcodes[] = {
     Opcode(LEX_RPOP, "RPOP"),
     Opcode(LEX_STORE, "STORE"),  // NOTE: Forth uses the symbol '!' for this 
     Opcode(LEX_SWAP, "SWAP"),
+    Opcode(LEX_SUB, "SUB"),
     Opcode(LEX_XOR, "XOR"),
 };
 

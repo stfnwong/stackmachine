@@ -41,7 +41,6 @@ TEST_CASE("lex all instructions", "[classic]")
 
     FileInfo lex_file = test_lexer.getFileInfo();
 
-
     // TODO : could also try to make an iterator, except that I hate iterators...
     for(unsigned int l = 0; l < lex_file.size(); ++l)
     {
@@ -49,7 +48,10 @@ TEST_CASE("lex all instructions", "[classic]")
         std::cout << cur_line.toString() << std::endl;
     }
 
+    std::cout << "Found " << lex_file.size() << " instructions in source file " 
+        << all_instr_file << std::endl;
 
-    REQUIRE(lex_file.size() == 16);         // should be equal to the number of instructions supported by the machine
+    // should be equal to the number of instructions supported by the machine
+    REQUIRE(lex_file.size() == 17);         
 
 }

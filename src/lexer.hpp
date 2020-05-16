@@ -27,12 +27,13 @@ private:
 
     // source position
 private:
-    int cur_line;
-    int cur_pos;
-    char cur_char;
-    int cur_addr;
+    int   cur_line;     // current line in file
+    int   cur_col;      // column in this line
+    int   cur_pos;      // position in entire file 
+    char  cur_char;
+    int   cur_addr;
     char* token_buf;
-    int token_buf_size;
+    int   token_buf_size;
 
     // instruction tables
 private:

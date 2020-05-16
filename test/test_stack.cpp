@@ -66,14 +66,14 @@ TEST_CASE("test stack fill then empty", "[classic]")
     REQUIRE(test_stack.size() == 0);
 
     // Fill up the stack 
-    for(int i = 0; i < test_stack.capacity(); ++i)
+    for(unsigned int i = 0; i < test_stack.capacity(); ++i)
     {
         test_stack.push(i << 1);
     }
     REQUIRE(test_stack.full() == true);
 
     // Now lets empty the stack and check what comes back 
-    for(int i = 0; i < test_stack.capacity(); ++i)
+    for(unsigned int i = 0; i < test_stack.capacity(); ++i)
     {
         REQUIRE(test_stack.peek() == ((test_stack.capacity() - i - 1) << 1));
         auto stack_out = test_stack.pop();

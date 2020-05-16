@@ -252,7 +252,7 @@ std::string LineInfo::toString(void) const
 
     // TODO: most of these aren't used yet...
     oss << "---------------------------------------------------------------------" << std::endl;
-    oss << "Line  Type   Addr  Mnemonic   Opcode   Arguments   literal   error" << std::endl;
+    oss << "Line  Type   Addr  Mnemonic   Opcode   Literal   error" << std::endl;
 
     oss << std::left << std::setw(6) << std::setfill(' ') << this->line_num;
     oss << "[";
@@ -260,10 +260,15 @@ std::string LineInfo::toString(void) const
         oss << "l";
     else
         oss << ".";
-    oss << "] ";
+    oss << "]   ";
+    // Address
     oss << std::right << "0x" << std::hex << std::setw(4) << std::setfill('0') << this->addr << " ";
+    // Mnemonic
     oss << std::left << std::setw(12) << std::setfill(' ') << this->opcode.mnemonic;
+    // Instruction
     oss << "0x" << std::right << std::hex << std::setw(4) << std::setfill('0') << this->opcode.instr << "  ";
+    // Literal
+    oss << "0x" << std::right << std::hex << std::setw(4) << std::setfill('0') << this->literal << "  ";
 
     oss << std::endl;
 
