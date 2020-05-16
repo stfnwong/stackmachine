@@ -203,7 +203,6 @@ std::string Token::toString(void) const
 LineInfo::LineInfo() : 
     line_num(0),
     addr(0),
-    token(Token()),
     opcode(Opcode()),
     literal(0),
     error(false),
@@ -217,7 +216,6 @@ LineInfo::LineInfo(const LineInfo& that)
 {
     this->line_num = that.line_num;
     this->addr     = that.addr;
-    this->token    = that.token;
     this->opcode   = that.opcode;
     this->literal  = that.literal;
     this->error    = that.error;
@@ -226,6 +224,37 @@ LineInfo::LineInfo(const LineInfo& that)
     this->labelstr = that.labelstr;
 }
 
+
+/*
+ * LineInfo::==
+ */
+bool LineInfo::operator==(const LineInfo& that) const
+{
+    if(this->line_num != that.line_num)
+        return false;
+    if(this->addr != that.addr)
+        return false;
+    if(this->literal != that.literal)
+        return false;
+    if(this->error != that.error)
+        return false;
+    if(this->errstr != that.errstr)
+        return false;
+    if(this->labelstr != that.labelstr)
+        return false;
+    if(this->opcode != that.opcode)
+        return false;
+    
+    return true;
+}
+
+/*
+ * LineInfo::!=
+ */
+bool LineInfo::operator!=(const LineInfo& that) const
+{
+    return !(*this == that);
+}
 
 /*
  * LineInfo::init()
@@ -239,7 +268,6 @@ void LineInfo::init(void)
     this->errstr    = "";
     this->label     = false;
     this->labelstr  = "";
-    this->token.init();
     this->opcode.init();
 }
 

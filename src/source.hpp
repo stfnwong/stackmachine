@@ -96,7 +96,6 @@ struct LineInfo
 {
     int         line_num;
     uint32_t    addr;
-    Token       token;
     Opcode      opcode;
     int         literal;
     bool        error;
@@ -109,6 +108,8 @@ public:
     LineInfo(const LineInfo& that);
 
     LineInfo& operator=(const LineInfo& that) = default;
+    bool operator==(const LineInfo& that) const;
+    bool operator!=(const LineInfo& that) const;
 
     void init(void);
     std::string toString(void) const;

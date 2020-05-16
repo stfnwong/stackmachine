@@ -14,7 +14,9 @@
 #include "source.hpp"
 
 const constexpr int LEXER_TOKEN_BUF_SIZE = 64;
-const constexpr int LEXER_ADDR_INCR = 4;
+// since I've decided to make this a 32-bit machine I'll
+// align on 4-byte boundary
+const constexpr int LEXER_ADDR_INCR = 4;        
 
 /*
  *  Lexer 
@@ -62,7 +64,7 @@ private:
 
     // extract tokens
 private:
-    Token extractLiteral(const std::string& token, unsigned int start_offset, unsigned int& end_offset);
+    Token extractLiteral(const std::string& token, unsigned int start_offset);
     int convertLiteral(const std::string& literal);
 
 private:

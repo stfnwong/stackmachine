@@ -178,8 +178,6 @@ void Lexer::nextToken(void)
     Opcode op;
     Token out_token;
     std::string token_str;
-    unsigned int start_offset; 
-    unsigned int end_offset;
 
     this->scanToken();
     token_str = std::string(this->token_buf);
@@ -191,11 +189,10 @@ void Lexer::nextToken(void)
     std::transform(token_str.begin(), token_str.end(), token_str.begin(),
             [](unsigned char c){ return std::toupper(c); });
 
-    start_offset = 0;
     // Check digits, which may be either literals or register offsets 
     if(std::isdigit(token_str[0]))
     {
-        out_token = this->extractLiteral(token_str, start_offset, end_offset);
+        out_token = this->extractLiteral(token_str, 0);
         if(out_token.type == TOK_NONE)
         {
             this->line_info.error  = true;
@@ -207,10 +204,11 @@ void Lexer::nextToken(void)
     }
 
     // For now literals always start with '$' and are in hexadecimal
+    // Note for myself - we almost never have literals because this
+    // is a stack machine
     if(token_str[0] == '$')
     {
-        // TODO : do I really need end_offset here?
-        out_token = this->extractLiteral(token_str, 0, end_offset);
+        out_token = this->extractLiteral(token_str, 0); 
         if(out_token.type == TOK_NONE)
         {
             this->line_info.error  = true;
@@ -230,7 +228,6 @@ void Lexer::nextToken(void)
     {
         this->cur_token.type = TOK_INSTR;
         this->cur_token.val  = std::string(this->token_buf);
-        std::cout << "[" << __func__ << "] token_buf: " << this->token_buf << std::endl;
     }
     // Exhausted all options - assign as label 
     else
@@ -242,11 +239,10 @@ void Lexer::nextToken(void)
 NEXT_TOKEN_END:
     if(this->verbose)
     {
-            // TODO : print this later..
-        //std::cout << "[" << __func__ << "] (line " << std::dec << 
-        //    this->cur_line << ") got " << this->cur_token.toString() << 
-        //    " token <" << token_str << "> with value <" << 
-        //    this->cur_token.val << ">" << std::endl;
+        std::cout << "[" << __func__ << "] (line " << std::dec << 
+            this->cur_line << ") got " << this->cur_token.toString() << 
+            " token <" << token_str << "> with value <" << 
+            this->cur_token.val << ">" << std::endl;
     }
 }
 
@@ -257,7 +253,7 @@ NEXT_TOKEN_END:
 /*
  * Lexer::extractLiteral()
  */ 
-Token Lexer::extractLiteral(const std::string& token, unsigned int start_offset, unsigned int& end_offset) 
+Token Lexer::extractLiteral(const std::string& token, unsigned int start_offset)
 {
     unsigned int tok_ptr;
     std::string literal_token;
@@ -272,13 +268,12 @@ Token Lexer::extractLiteral(const std::string& token, unsigned int start_offset,
         tok_ptr++;
 
     if(tok_ptr == start_offset)     // no chars were consumed
-    {
-        end_offset = start_offset;
         goto EXTRACT_LITERAL_END;
-    }
+
+    out_token.val  = token.substr(start_offset, tok_ptr - start_offset);
+    out_token.type = TOK_LITERAL;
 
 EXTRACT_LITERAL_END:
-    end_offset = tok_ptr;
     return out_token;       // shut linker up
 }
 
@@ -335,14 +330,9 @@ int Lexer::parseLine(void)
     // Handle instructions
     if(this->cur_token.type == TOK_INSTR)
     {
-        int end_offset;
-        // valid check is already done in scanToken(), so don't need to check here
-        std::cout << "[" << __func__ << "] this->cur_token : " << this->cur_token.toString() << std::endl;
         op = this->instr_table.getName(this->cur_token.val);
         this->line_info.opcode = op;
 
-        // TODO : debug, remove 
-        std::cout << "[" << __func__ << "] got opcode : " << op.toString() << std::endl;
         switch(op.instr)
         {
             // NOTE: the only two instructions that take arguments right now are store and fetch
@@ -356,7 +346,6 @@ int Lexer::parseLine(void)
                     goto PARSE_LINE_END;
                 }
                 this->line_info.literal = this->convertLiteral(this->cur_token.val);
-                std::cout << "[" << __func__ << "] need to handle a literal here" << std::endl;
                 break;
 
             case LEX_ADD:
@@ -376,7 +365,6 @@ int Lexer::parseLine(void)
                 break;
 
             default:
-                std::cout << "[" << __func__ << "] got some bogus opcode " << op.toString() << std::endl;
                 this->line_info.error = true;
                 this->line_info.errstr = "Unknown opcode " + op.toString();
                 break;
@@ -391,11 +379,10 @@ PARSE_LINE_END:
     {
         if(this->line_info.error)
             std::cout << "[" << __func__ << "] error : " << this->line_info.errstr << std::endl;
-        //std::cout << "[" << __func__ << "] : " << this->line_info.toString() << std::endl;
     }
 
     this->line_info.line_num = line_num;
-    this->line_info.addr = this->cur_addr;
+    this->line_info.addr     = this->cur_addr;
     this->file_info.add(this->line_info);       // TODO : this might not stay here
     this->cur_addr += LEXER_ADDR_INCR;
 
@@ -443,7 +430,7 @@ int Lexer::lex(void)
         if(this->isComment())
         {
             std::cout << "[" << __func__ << "] found comment on line " 
-                << this->cur_line << " at column (skipping to end of line)" << this->cur_col << std::endl;
+                << this->cur_line << " at column (skipping to end of line) " << this->cur_col << std::endl;
             this->skipComment();
             continue;
         }
