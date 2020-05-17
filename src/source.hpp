@@ -100,7 +100,6 @@ struct LineInfo
     int         literal;
     bool        error;
     std::string errstr;
-    bool        label;
     std::string labelstr;
 
 public:

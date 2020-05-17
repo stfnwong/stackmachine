@@ -207,7 +207,6 @@ LineInfo::LineInfo() :
     literal(0),
     error(false),
     errstr(""),
-    label(false),
     labelstr("")
 {}
 
@@ -220,7 +219,6 @@ LineInfo::LineInfo(const LineInfo& that)
     this->literal  = that.literal;
     this->error    = that.error;
     this->errstr   = that.errstr;
-    this->label    = that.label;
     this->labelstr = that.labelstr;
 }
 
@@ -266,7 +264,6 @@ void LineInfo::init(void)
     this->literal   = 0;
     this->error     = false;
     this->errstr    = "";
-    this->label     = false;
     this->labelstr  = "";
     this->opcode.init();
 }
@@ -280,15 +277,10 @@ std::string LineInfo::toString(void) const
 
     // TODO: most of these aren't used yet...
     oss << "---------------------------------------------------------------------" << std::endl;
-    oss << "Line  Type   Addr   Mnemonic    Opcode   Literal   error" << std::endl;
+    oss << "Line  Addr   Mnemonic    Opcode   Literal   error" << std::endl;
 
     oss << std::left << std::setw(6) << std::setfill(' ') << this->line_num;
-    oss << "[";
-    if(this->label)
-        oss << "l";
-    else
-        oss << ".";
-    oss << "]   ";
+    oss << "  ";
     // Address
     oss << std::right << "0x" << std::hex << std::setw(4) << std::setfill('0') << this->addr << "  ";
     // Mnemonic
@@ -322,8 +314,6 @@ std::string LineInfo::diffString(const LineInfo& that) const
         oss << "error (" << this->error << ") != (" << that.error << ")" << std::endl;
     if(this->errstr != that.errstr)
         oss << "errstr (" << this->errstr << ") != (" << that.errstr << ")" << std::endl;
-    if(this->label != that.label)
-        oss << "label (" << this->label << ") != (" << that.label << ")" << std::endl;
     if(this->labelstr != that.labelstr)
         oss << "labelstr (" << this->labelstr << ") != (" << that.labelstr << ")" << std::endl;
 

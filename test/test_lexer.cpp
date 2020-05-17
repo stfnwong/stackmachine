@@ -16,6 +16,8 @@
 
 
 static std::string all_instr_file = "asm/all_instr.asm";
+static std::string test_label_file = "asm/test_label.asm";
+
 
 // Not actually that much to test on init
 TEST_CASE("lexer init", "[classic]")
@@ -168,7 +170,7 @@ TEST_CASE("lex all instructions", "[classic]")
     REQUIRE(status == 0);       // NOTE that this test means nothing for now...
 
     status = test_lexer.lex();
-    //REQUIRE(status == 0);     // TODO : status is broken for now anyway
+    REQUIRE(status == 0);     
 
     FileInfo out_fileinfo = test_lexer.getFileInfo();
 
@@ -178,6 +180,104 @@ TEST_CASE("lex all instructions", "[classic]")
     // should be equal to the number of instructions supported by the machine
     // Compare against expected output 
     FileInfo exp_fileinfo = get_all_instr_file_fileinfo();
+    REQUIRE(out_fileinfo.size() == exp_fileinfo.size());         
+
+    for(unsigned int l = 0; l < out_fileinfo.size(); ++l)
+    {
+        LineInfo out_line = out_fileinfo.get(l);
+        LineInfo exp_line = exp_fileinfo.get(l);
+
+        if(exp_line != out_line)
+        {
+            std::cout << "ERROR in line " << std::dec << l << std::endl;
+            std::cout << "Expecting  " << std::endl << exp_line.toString() << std::endl;
+            std::cout << "Got        " << std::endl << out_line.toString() << std::endl;
+            std::cout << "Diff       " << std::endl << out_line.diffString(exp_line) << std::endl;
+        }
+        REQUIRE(exp_line == out_line);
+    }
+}
+
+
+// Expected output when lexing all instruction file
+FileInfo get_label_test_file_fileinfo(void)
+{
+    FileInfo info;
+    LineInfo line;
+
+    // INLINE_LABEL: STORE $10
+    line.init();
+    line.opcode = Opcode(LEX_STORE, "STORE");
+    line.addr   = 0x0;          
+    line.line_num = 4;
+    line.literal = 0x10;
+    line.labelstr = "INLINE_LABEL";
+    info.add(line);
+
+    // PRE_LINE_LABEL: DUP
+    line.init();
+    line.opcode = Opcode(LEX_DUP, "DUP");
+    line.addr   = 0x2;          
+    line.line_num = 8;
+    line.labelstr = "PRE_LINE_LABEL";
+    info.add(line);
+
+    // ADD
+    line.init();
+    line.opcode = Opcode(LEX_ADD, "ADD");
+    line.addr   = 0x4;          
+    line.line_num = 9;
+    info.add(line);
+
+    // SWAP
+    line.init();
+    line.opcode = Opcode(LEX_SWAP, "SWAP");
+    line.addr   = 0x6;          
+    line.line_num = 10;
+    info.add(line);
+
+    // PRE_LINE_LABEL_NO_INDENT: XOR
+    line.init();
+    line.opcode = Opcode(LEX_XOR, "XOR");
+    line.addr   = 0x8;          
+    line.line_num = 14;
+    line.labelstr = "PRE_LINE_LABEL_NO_INDENT";
+    info.add(line);
+
+    // LINE_LABEL_NO_COLON RPUSH
+    line.init();
+    line.opcode = Opcode(LEX_RPUSH, "RPUSH");
+    line.addr   = 0xA;
+    line.line_num = 17;
+    line.labelstr = "LINE_LABEL_NO_COLON";
+    info.add(line);
+
+    return info;
+}
+
+
+// ==== LABEL TEST
+TEST_CASE("lex labels", "[classic]")
+{
+    int status;
+    Lexer test_lexer;
+
+    test_lexer.setVerbose();
+    REQUIRE(test_lexer.getVerbose() == true);
+    status = test_lexer.read(test_label_file);
+    REQUIRE(status == 0);       // NOTE that this test means nothing for now...
+
+    status = test_lexer.lex();
+    REQUIRE(status == 0);     
+
+    FileInfo out_fileinfo = test_lexer.getFileInfo();
+
+    std::cout << "Found " << out_fileinfo.size() << " instructions in source file " 
+        << all_instr_file << std::endl;
+
+    // should be equal to the number of instructions supported by the machine
+    // Compare against expected output 
+    FileInfo exp_fileinfo = get_label_test_file_fileinfo();
     REQUIRE(out_fileinfo.size() == exp_fileinfo.size());         
 
     for(unsigned int l = 0; l < out_fileinfo.size(); ++l)

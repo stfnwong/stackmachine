@@ -319,11 +319,11 @@ int Lexer::parseLine(void)
         sym.addr = this->cur_addr;
         // add to symbol table 
         this->sym_table.add(sym);
-
+        // add label to line 
+        this->line_info.labelstr = sym.sym;
         this->advance();        // skip ahead to align pointer for next token
-        // scan in the next token
-        this->nextToken(); 
-        line_num = this->cur_line;   // if the label is on a seperate line then record the new current line
+        line_num = this->cur_line;
+        this->nextToken();      // scan in the next token
     }
 
     // Handle instructions
@@ -338,7 +338,6 @@ int Lexer::parseLine(void)
             case LEX_STORE:
             case LEX_FETCH:
                 this->nextToken();
-                std::cout << "[" << __func__ << "] this->cur_token : " << this->cur_token.toString() << std::endl;
                 if(this->cur_token.type != TOK_LITERAL)
                 {
                     this->line_info.error = true;
@@ -401,6 +400,21 @@ void Lexer::resolveLabels(void)
     std::cout << "[" << __func__ << "] when there are symbols to resolve, resolve them here" << std::endl;
 }
 
+/*
+ * Lexer::posString()
+ */
+std::string Lexer::posString(void) const
+{
+    std::ostringstream oss;
+
+    oss << "    cur_line = " << std::dec << this->cur_line << std::endl;
+    oss << "    cur_col  = " << std::dec << this->cur_col << std::endl;
+    oss << "    cur_pos  = " << std::dec << this->cur_pos << std::endl;
+    oss << "    cur_char = '" << this->cur_char << "'" << std::endl;
+
+    return oss.str();
+}
+
 
 /*
  * Lexer::lex()
@@ -422,16 +436,10 @@ int Lexer::lex(void)
         // eat comments 
         if(this->isComment())
         {
-            std::cout << "[" << __func__ << "] found comment on line " 
-                << this->cur_line << " at column (skipping to end of line) " << this->cur_col << std::endl;
             this->skipComment();
             continue;
         }
-        // TODO : remove 
-        std::cout << "[" << __func__ << "] parsing line " << this->cur_line 
-            << " starting at column " << this->cur_col << std::endl;
         status = this->parseLine();
-
         if(status < 0)
             goto LEX_END;
     }

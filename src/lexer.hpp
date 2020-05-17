@@ -27,13 +27,13 @@ private:
 
     // source position
 private:
-    int   cur_line;     // current line in file
-    int   cur_col;      // column in this line
-    int   cur_pos;      // position in entire file 
-    char  cur_char;
-    int   cur_addr;
-    char* token_buf;
-    int   token_buf_size;
+    unsigned int cur_line;     // current line in file
+    unsigned int cur_col;      // column in this line
+    unsigned int cur_pos;      // position in entire file 
+    char         cur_char;
+    uint16_t     cur_addr;
+    char*        token_buf;
+    int          token_buf_size;
 
     // instruction tables
 private:
@@ -68,6 +68,7 @@ private:
 private:
     int parseLine(void);
     void resolveLabels(void);
+    std::string posString(void) const;      // for internal use
 
 public:
     Lexer();
