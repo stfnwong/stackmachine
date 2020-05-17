@@ -16,8 +16,6 @@ before_install:
     - sudo update-alternatives --install /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-7 60
     - sudo update-alternatives --install /usr/bin/x86_64-linux-gnu-gcc x86_64-linux-gnu-gcc /usr/bin/x86_64-linux-gnu-gcc-7 60 --slave /usr/bin/x86_64-linux-gnu-g++ x86_64-linux-gnu-g++ /usr/bin/x86_64-linux-gnu-g++-7
 
-# Got rid of gtest, using catch2 now to avoid issue with 
-# Ubuntu's packaging on travis
 script:
     - make clean && make all
     - ./scripts/run_tests.sh
