@@ -116,6 +116,7 @@ public:
 };
 
 
+// TODO : this processor does not yet have a data/text segment distinction
 /*
  * FileInfo
  * Represents a file (collection of LineInfos)
@@ -128,6 +129,7 @@ public:
     FileInfo();
 
     void add(const LineInfo& line);
+    //void update(const LineInfo& line, unsigned int idx);
     unsigned int size(void) const;
 
     const LineInfo& get(unsigned int idx) const;

@@ -1,6 +1,10 @@
 #!/bin/bash
 # Run unit tests 
 
-./bin/test/test_stack
-./bin/test/test_state
-./bin/test/test_lexer
+
+for t in bin/test/*; do
+    ./$t || rc=$?
+    if [[ $rc -ne 0 ]]; then
+        exit $rc
+    fi
+done
