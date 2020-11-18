@@ -10,10 +10,10 @@
 
 #include <cstdint>
 #include <iostream>
-#include "stack.hpp"
+#include "Stack.hpp"
 
 
-TEST_CASE("test stack init", "[classic]")
+TEST_CASE("test_stack_init", "[classic]")
 {
     Stack<uint16_t> test_stack;
 
@@ -23,7 +23,7 @@ TEST_CASE("test stack init", "[classic]")
     REQUIRE(test_stack.size() == 0);
 }
 
-TEST_CASE("test stack fill", "[classic]")
+TEST_CASE("test_stack_fill", "[classic]")
 {
     Stack<uint16_t> test_stack;
 
@@ -57,7 +57,7 @@ TEST_CASE("test stack fill", "[classic]")
     }
 }
 
-TEST_CASE("test stack fill then empty", "[classic]")
+TEST_CASE("test_stack_fill_then_empty", "[classic]")
 {
     Stack<uint16_t> test_stack;
 

@@ -6,7 +6,7 @@
  */
 
 #include <cstring>
-#include "state.hpp"
+#include "State.hpp"
 
 
 State::State() : pc(0), mar(0), data_stack(SM_STACK_SIZE), return_stack(SM_STACK_SIZE)

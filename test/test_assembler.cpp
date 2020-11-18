@@ -10,8 +10,8 @@
 
 #include <cstdint>
 #include <iostream>
-#include "lexer.hpp"
-#include "assembler.hpp"
+#include "Lexer.hpp"
+#include "Assembler.hpp"
 
 // TODO : worth doing basic token and opcode tests?
 TEST_CASE("test lexer init", "[classic]")

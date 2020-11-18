@@ -12,7 +12,7 @@
 
 #include <cstdint>
 #include <memory>
-#include "stack.hpp"
+#include "Stack.hpp"
 
 const constexpr int SM_MEM_SIZE = 0x1000;    // lets start with 16k of mem
 const constexpr int SM_NUM_REG = 0x4;
@@ -29,19 +29,19 @@ struct State
     // memory
     uint8_t* mem;       // TODO: change to vector?
     
-public:
-    // TODO: remove raw pointers?
-    State();
-    ~State();
-    State(const State& that);
+    public:
+        // TODO: remove raw pointers?
+        State();
+        ~State();
+        State(const State& that);
 
-    void next(void);
-    void store(uint16_t addr, uint8_t data);
-    uint8_t load(uint16_t addr) const;
+        void next(void);
+        void store(uint16_t addr, uint8_t data);
+        uint8_t load(uint16_t addr) const;
 
 
-    void init_mem(void);
-    void init_reg(void);
+        void init_mem(void);
+        void init_reg(void);
 };
 
 

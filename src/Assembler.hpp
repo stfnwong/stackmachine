@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-#include "source.hpp"
+#include "Source.hpp"
 
 /*
  * Assembler.
@@ -20,18 +20,18 @@
  */
 class Assembler
 {
-private:
-    bool verbose;
+    private:
+        bool verbose;
 
-private:
+    private:
 
 
-public:
-    Assembler();
+    public:
+        Assembler();
 
-    int assem(const FileInfo& file_info);
-    void setVerbose(void);
-    void clearVerbose(void);
+        int assem(const FileInfo& file_info);
+        void setVerbose(void);
+        void clearVerbose(void);
 };
 
 

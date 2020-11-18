@@ -9,7 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "assembler.hpp"
+#include "Assembler.hpp"
 
 
 Assembler::Assembler() : verbose(false) {} 

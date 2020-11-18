@@ -11,8 +11,8 @@
 #include <cstdint>
 #include <iostream>
 #include <string>
-#include "lexer.hpp"
-#include "source.hpp"
+#include "Lexer.hpp"
+#include "Source.hpp"
 
 
 static std::string all_instr_file = "asm/all_instr.asm";

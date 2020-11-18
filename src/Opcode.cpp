@@ -7,7 +7,8 @@
 
 #include <iomanip>
 #include <sstream>
-#include "opcode.hpp"
+#include "Opcode.hpp"
+
 
 // ================ OPCODE ================ //
 Opcode::Opcode() : instr(0), mnemonic("") {} 

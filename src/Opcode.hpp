@@ -46,18 +46,18 @@ struct Opcode
     uint32_t instr;
     std::string mnemonic;
 
-public:
-    Opcode();
-    Opcode(uint32_t i, const std::string& m);
-    Opcode(const Opcode& that);
+    public:
+        Opcode();
+        Opcode(uint32_t i, const std::string& m);
+        Opcode(const Opcode& that);
 
-    Opcode& operator=(const Opcode& that) = default;
-    //Opcode& operator=(const Opcode& that);
-    bool operator==(const Opcode& that) const;
-    bool operator!=(const Opcode& that) const;
+        Opcode& operator=(const Opcode& that) = default;
+        //Opcode& operator=(const Opcode& that);
+        bool operator==(const Opcode& that) const;
+        bool operator!=(const Opcode& that) const;
 
-    void init(void);
-    std::string toString(void) const;
+        void init(void);
+        std::string toString(void) const;
 };
 
 // List of opcodes accepted by assembler 
@@ -90,18 +90,18 @@ struct OpcodeTable
 {
     std::vector<Opcode> table;
 
-public:
-    OpcodeTable();
-   
-    OpcodeTable& operator=(const OpcodeTable& that) = default;
+    public:
+        OpcodeTable();
+       
+        OpcodeTable& operator=(const OpcodeTable& that) = default;
 
-    void init(void);
-    void add(const Opcode& op);
-    Opcode get(const Opcode& op);
-    Opcode getIdx(unsigned int idx);
-    Opcode getName(const std::string& name);
+        void init(void);
+        void add(const Opcode& op);
+        Opcode get(const Opcode& op);
+        Opcode getIdx(unsigned int idx);
+        Opcode getName(const std::string& name);
 
-    unsigned int size(void) const;
+        unsigned int size(void) const;
 };
 
 

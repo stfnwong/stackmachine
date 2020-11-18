@@ -10,8 +10,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "lexer.hpp"
-#include "opcode.hpp"
+#include "Lexer.hpp"
+#include "Opcode.hpp"
 
 
 // ================ LEXER ================ //
