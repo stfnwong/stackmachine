@@ -9,7 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "assembler.hpp"
+#include "Assembler.hpp"
 
 // ======== INSTRUCTION ======== //
 Instr::Instr() : addr(0), microcode(0) {} 

@@ -12,7 +12,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
-#include "opcode.hpp"
+#include "Opcode.hpp"
 
 /* 
  * Symbol - resolved in a later pass of the Lexer

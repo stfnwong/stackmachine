@@ -11,7 +11,7 @@
 #include <cstdint>
 #include <string>
 
-#include "source.hpp"
+#include "Source.hpp"
 
 const constexpr int LEXER_TOKEN_BUF_SIZE = 64;
 const constexpr int LEXER_ADDR_INCR = 2;        // 16-bit machine boundary alignment 

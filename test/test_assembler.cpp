@@ -10,9 +10,9 @@
 
 #include <cstdint>
 #include <iostream>
-#include "lexer.hpp"
-#include "assembler.hpp"
-#include "source.hpp"
+#include "Lexer.hpp"
+#include "Assembler.hpp"
+#include "Source.hpp"
 
 static std::string all_instr_file = "asm/all_instr.asm";
 static std::string test_label_file = "asm/test_label.asm";

@@ -35,6 +35,7 @@ template <typename T> class Stack
         bool full(void) const;
         unsigned int size(void) const;
         unsigned int capacity(void) const;
+
         std::string toString(void) const;
 };
 

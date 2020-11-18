@@ -8,7 +8,7 @@
 #include "catch/catch.hpp"
 
 #include <iostream>
-#include "state.hpp"
+#include "State.hpp"
 
 TEST_CASE("test state init", "[classic]")
 {

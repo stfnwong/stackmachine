@@ -10,7 +10,9 @@
 
 #include <cstdint>
 #include <iostream>
-#include "stack.hpp"
+#include "Stack.hpp"
+
+// TODO: test copy assignments
 
 
 TEST_CASE("test stack init", "[classic]")
