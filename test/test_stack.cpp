@@ -15,7 +15,7 @@
 // TODO: test copy assignments
 
 
-TEST_CASE("test stack init", "[classic]")
+TEST_CASE("test_stack_init", "stack")
 {
     Stack<uint16_t> test_stack;
 
@@ -25,7 +25,29 @@ TEST_CASE("test stack init", "[classic]")
     REQUIRE(test_stack.size() == 0);
 }
 
-TEST_CASE("test stack fill", "[classic]")
+TEST_CASE("test_stack_copy", "stack")
+{
+    Stack<uint16_t> src_stack(16);
+    Stack<uint16_t> dst_stack(16);
+
+    REQUIRE(src_stack.empty() == true);
+    REQUIRE(dst_stack.empty() == true);
+    REQUIRE(src_stack.capacity() == 16);
+    REQUIRE(dst_stack.capacity() == 16);
+
+    // fill up src stack 
+    for(unsigned int i = 0; i < src_stack.capacity(); ++i)
+        src_stack.push(2 * i);
+
+    REQUIRE(src_stack.empty() == false);
+    REQUIRE(src_stack.full() == true);
+
+    REQUIRE(dst_stack != src_stack);
+    dst_stack = src_stack;
+    REQUIRE(dst_stack == src_stack);
+}
+
+TEST_CASE("test_stack_fill", "stack")
 {
     Stack<uint16_t> test_stack;
 
@@ -59,7 +81,7 @@ TEST_CASE("test stack fill", "[classic]")
     }
 }
 
-TEST_CASE("test stack fill then empty", "[classic]")
+TEST_CASE("test stack fill then empty", "stack")
 {
     Stack<uint16_t> test_stack;
 

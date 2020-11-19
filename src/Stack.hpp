@@ -25,20 +25,72 @@ template <typename T> class Stack
     public:
         Stack() : data(DEFAULT_STACK_SIZE), ptr(0), max_size(DEFAULT_STACK_SIZE) {} 
         Stack(unsigned int stack_size) : data(stack_size), ptr(0), max_size(stack_size) {} 
-        ~Stack() = default;
-        Stack(const Stack& that) = default;
+        Stack(const Stack& that);
 
-        void push(const T& x);
-        T pop(void);
-        T peek(void);
-        bool empty(void) const;
-        bool full(void) const;
+        // copy assign
+        Stack& operator=(const Stack& that);
+
+        // comparisons
+        bool operator==(const Stack& that) const;
+        bool operator!=(const Stack& that) const;
+
+        void         push(const T& x);
+        T            pop(void);
+        T            peek(void);
+        bool         empty(void) const;
+        bool         full(void) const;
         unsigned int size(void) const;
         unsigned int capacity(void) const;
 
         std::string toString(void) const;
 };
 
+
+// copy ctor
+template <typename T> Stack<T>::Stack(const Stack& that)
+{
+    this->ptr = that.ptr;
+    this->max_size = that.max_size;
+    this->data.reserve(that.data.size());
+    for(unsigned int i = 0; i < that.data.size(); ++i)
+        this->data[i] = that.data[i];
+}
+// copy assignment
+template <typename T> Stack<T>& Stack<T>::operator=(const Stack& that)
+{
+    if(this != &that)
+    {
+        if(this->max_size < that.max_size)
+            this->data.reserve(that.max_size);
+        this->ptr = that.ptr;
+        this->max_size = that.max_size;
+        for(unsigned int i = 0; i < that.data.size(); ++i)
+            this->data[i] = that.data[i];
+    }
+
+    return *this;
+}
+
+// comparisons 
+template <typename T> bool Stack<T>::operator==(const Stack& that) const
+{
+    if(this->ptr != that.ptr)
+        return false;
+    if(this->max_size != that.max_size)
+        return false;
+    for(unsigned int i = 0; i < this->max_size; ++i)
+    {
+        if(this->data[i] != that.data[i])
+            return false;
+    }
+
+    return true;
+}
+
+template <typename T> bool Stack<T>::operator!=(const Stack& that) const
+{
+    return !(*this == that);
+}
 
 template <typename T> void Stack<T>::push(const T& x)
 {
@@ -68,7 +120,7 @@ template <typename T> T Stack<T>::peek(void)
 
 template <typename T> bool Stack<T>::empty(void) const
 {
-    return this->ptr == 0;
+    return (this->ptr == 0) ? true : false;
 }
 
 template <typename T> bool Stack<T>::full(void) const

@@ -20,7 +20,7 @@ static std::string test_label_file = "asm/test_label.asm";
 
 
 // Not actually that much to test on init
-TEST_CASE("lexer init", "[classic]")
+TEST_CASE("lexer_init", "lexer")
 {
     Lexer test_lexer;
 
@@ -159,7 +159,7 @@ FileInfo get_all_instr_file_fileinfo(void)
 
 
 // ==== ALL INSTRUCTION TEST 
-TEST_CASE("lex all instructions", "[classic]")
+TEST_CASE("lex_all_instructions", "lexer")
 {
     int status;
     Lexer test_lexer;
@@ -257,7 +257,7 @@ FileInfo get_label_test_file_fileinfo(void)
 
 
 // ==== LABEL TEST
-TEST_CASE("lex labels", "[classic]")
+TEST_CASE("lex_labels", "lexer")
 {
     int status;
     Lexer test_lexer;

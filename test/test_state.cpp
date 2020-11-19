@@ -10,7 +10,32 @@
 #include <iostream>
 #include "State.hpp"
 
-TEST_CASE("test state init", "[classic]")
+// Tests creation, set and read, and comparison
+TEST_CASE("test_memory_init", "state")
+{
+    Memory mem(0x1000);
+
+    REQUIRE(mem.size() == 0x1000);
+    mem.clear();
+    for(unsigned int i = 0; i < mem.size(); ++i)
+        REQUIRE(mem[i] == 0);
+
+    Memory mem2(0x100);
+
+    REQUIRE(mem != mem2);
+
+    Memory mem3(0x100);
+    mem2.clear();
+    mem3.clear();
+
+    REQUIRE(mem2 == mem3);
+    for(unsigned int i = 0; i < mem3.size(); ++i)
+        mem3[i] = i % 256;
+    REQUIRE(mem2 != mem3);
+}
+
+
+TEST_CASE("test_state_init", "state")
 {
     State test_state;
 
